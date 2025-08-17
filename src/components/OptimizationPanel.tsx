@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Target, Award, DollarSign, TrendingUp } from 'lucide-react';
 import { MATERIALS } from '../data/materials';
-import { calculateOptimalMaterial } from '../utils/calculations';
+import { findOptimalMaterial } from '../utils/calculations';
 
 interface OptimizationPanelProps {
   loadMass: number;
@@ -20,7 +20,7 @@ export const OptimizationPanel: React.FC<OptimizationPanelProps> = ({
   const [recommendation, setRecommendation] = useState<any>(null);
 
   const handleGetRecommendation = () => {
-    const result = calculateOptimalMaterial(loadMass, height, systemEfficiency, cycles, selectedPriority);
+    const result = findOptimalMaterial(loadMass, height, systemEfficiency, cycles, selectedPriority);
     setRecommendation(result);
   };
 
