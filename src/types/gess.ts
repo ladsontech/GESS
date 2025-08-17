@@ -12,6 +12,7 @@ export interface Material {
   properties: string[];
   relativeCost: number; // 1=low, 2=medium, 3=high
   selfDischargeRate: number; // %/day
+  powerOutput?: { min: number; max: number; duration: string }; // kW and duration
 }
 
 export interface GESSParameters {
@@ -21,11 +22,14 @@ export interface GESSParameters {
   systemEfficiency: number; // %
   cycles: number;
   volume?: number; // m³
+  timeElapsed?: number; // hours for self-discharge calculation
 }
 
 export interface EnergyResults {
   potentialEnergy: number; // J
   recoveredEnergy: number; // J
+  inputEnergy: number; // J (energy required for lifting)
+  outputEnergy: number; // J (energy available for generation)
   powerLoss: number; // W
   totalLifespan: number; // cycles
   volumeRequired: number; // m³
@@ -34,6 +38,8 @@ export interface EnergyResults {
   roundTripEfficiency: number; // %
   selfDischargeRate: number; // %/day
   degradationRate: number; // %/cycle
+  projectEfficiency: number; // % (using project-specific values)
+  powerOutput: { min: number; max: number; duration: string }; // kW
 }
 
 export interface ScenarioConfig {

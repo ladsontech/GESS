@@ -1,5 +1,5 @@
 import React from 'react';
-import { Battery, Zap, Clock, Box, TrendingDown, Gauge } from 'lucide-react';
+import { Battery, Zap, Clock, Box, TrendingDown, Gauge, Activity } from 'lucide-react';
 import { EnergyResults } from '../types/gess';
 
 interface ResultsPanelProps {
@@ -39,7 +39,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ results, materialName }) =>
         </p>
       </div>
       
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         <div className="bg-blue-50 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-2">
             <Battery className="text-blue-600" size={20} />
@@ -50,13 +50,23 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ results, materialName }) =>
           </div>
         </div>
 
+        <div className="bg-orange-50 rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Zap className="text-orange-600" size={20} />
+            <span className="text-sm font-medium text-gray-700">Input Energy</span>
+          </div>
+          <div className="text-2xl font-bold text-orange-600">
+            {formatEnergy(results.inputEnergy)}
+          </div>
+        </div>
+
         <div className="bg-green-50 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-2">
             <Zap className="text-green-600" size={20} />
-            <span className="text-sm font-medium text-gray-700">Recovered Energy</span>
+            <span className="text-sm font-medium text-gray-700">Output Energy</span>
           </div>
           <div className="text-2xl font-bold text-green-600">
-            {formatEnergy(results.recoveredEnergy)}
+            {formatEnergy(results.outputEnergy)}
           </div>
         </div>
 
@@ -80,12 +90,12 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ results, materialName }) =>
           </div>
         </div>
 
-        <div className="bg-orange-50 rounded-lg p-4">
+        <div className="bg-amber-50 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Box className="text-orange-600" size={20} />
+            <Box className="text-amber-600" size={20} />
             <span className="text-sm font-medium text-gray-700">Volume Required</span>
           </div>
-          <div className="text-2xl font-bold text-orange-600">
+          <div className="text-2xl font-bold text-amber-600">
             {results.volumeRequired.toFixed(2)} m³
           </div>
         </div>
@@ -93,10 +103,10 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ results, materialName }) =>
         <div className="bg-indigo-50 rounded-lg p-4">
           <div className="flex items-center gap-2 mb-2">
             <Gauge className="text-indigo-600" size={20} />
-            <span className="text-sm font-medium text-gray-700">Efficiency</span>
+            <span className="text-sm font-medium text-gray-700">Project Efficiency</span>
           </div>
           <div className="text-2xl font-bold text-indigo-600">
-            {results.roundTripEfficiency.toFixed(1)}%
+            {results.projectEfficiency.toFixed(1)}%
           </div>
         </div>
         
@@ -116,9 +126,24 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ results, materialName }) =>
             <span className="text-sm font-medium text-gray-700">Self-Discharge</span>
           </div>
           <div className="text-2xl font-bold text-pink-600">
-            {results.selfDischargeRate.toFixed(3)}%/day
+            {results.selfDischargeRate > 0 ? `${results.selfDischargeRate}%/hr` : 'Zero'}
           </div>
         </div>
+
+        {results.powerOutput && (
+          <div className="bg-cyan-50 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Activity className="text-cyan-600" size={20} />
+              <span className="text-sm font-medium text-gray-700">Power Output</span>
+            </div>
+            <div className="text-lg font-bold text-cyan-600">
+              {results.powerOutput.min}-{results.powerOutput.max} kW
+            </div>
+            <div className="text-xs text-gray-600 mt-1">
+              Duration: {results.powerOutput.duration}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -126,8 +151,8 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ results, materialName }) =>
           <h3 className="font-semibold text-gray-700 mb-3">Performance Metrics</h3>
           <div className="text-sm text-gray-600 space-y-2">
             <div className="flex justify-between">
-              <span>Round-Trip Efficiency:</span>
-              <span className="font-medium">{results.roundTripEfficiency.toFixed(1)}%</span>
+              <span>Project Efficiency:</span>
+              <span className="font-medium">{results.projectEfficiency.toFixed(1)}%</span>
             </div>
             <div className="flex justify-between">
               <span>Energy Density:</span>
@@ -153,7 +178,9 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({ results, materialName }) =>
             </div>
             <div className="flex justify-between">
               <span>Self-Discharge:</span>
-              <span className="font-medium">{results.selfDischargeRate.toFixed(3)}%/day</span>
+              <span className="font-medium">
+                {results.selfDischargeRate > 0 ? `${results.selfDischargeRate}%/hr` : 'Zero Loss'}
+              </span>
             </div>
           </div>
         </div>

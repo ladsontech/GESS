@@ -1,5 +1,5 @@
 import { GESSParameters, EnergyResults, ComparisonData } from '../types/gess';
-import { GRAVITY, MATERIALS, CONVERSIONS } from '../data/materials';
+import { GRAVITY, MATERIALS, CONVERSIONS, PROJECT_EFFICIENCIES } from '../data/materials';
 
 /**
  * Core GESS energy calculations based on gravitational potential energy
@@ -8,13 +8,51 @@ import { GRAVITY, MATERIALS, CONVERSIONS } from '../data/materials';
  * Sources:
  * - "Fundamentals of Physics" - Halliday, Resnick, Walker (10th Edition)
  * - "Energy Storage Technologies" - IEEE Power & Energy Society, 2020
+ * - Project Table 3.2: Lift efficiency 90%, Generation efficiency 90%
  */
 
+/**
+ * Calculate energy metrics using project-specific efficiencies
+ * Based on Table 3.2 findings
+ */
+export const calculateProjectEnergy = (mass: number, height: number, material: Material) => {
+  const potentialEnergy = mass * GRAVITY * height; // Joules
+  const potentialEnergyKWh = potentialEnergy * CONVERSIONS.J_TO_KWH; // Convert to kWh
+  
+  // Project efficiencies from Table 3.2
+  const inputEnergy = potentialEnergyKWh / PROJECT_EFFICIENCIES.LIFT_EFFICIENCY; // Energy required for lifting
+  const outputEnergy = potentialEnergyKWh * PROJECT_EFFICIENCIES.GENERATION_EFFICIENCY; // Energy available for generation
+  const roundTripEfficiency = PROJECT_EFFICIENCIES.ROUND_TRIP_EFFICIENCY * 100; // 81%
+  
+  return {
+    potential: potentialEnergyKWh,
+    input: inputEnergy,
+    output: outputEnergy,
+    efficiency: roundTripEfficiency,
+    energyDensity: (potentialEnergyKWh / (mass / material.density)) // kWh/m³
+  };
+};
+
+/**
+ * Simulate self-discharge mechanism for different materials
+ * Water loses energy due to evaporation, sand/concrete have zero loss
+ */
+export const simulateSelfDischarge = (currentEnergy: number, material: Material, timeElapsed: number = 1) => {
+  if (material.name === 'Water') {
+    // Water loses 0.1% per hour due to evaporation
+    return currentEnergy * Math.pow(1 - (material.selfDischargeRate / 100), timeElapsed);
+  }
+  // Sand and concrete have zero self-discharge
+  return currentEnergy;
+};
 export const calculateGESSResults = (params: GESSParameters): EnergyResults => {
-  const { material, loadMass, height, systemEfficiency, cycles } = params;
+  const { material, loadMass, height, systemEfficiency, cycles, timeElapsed = 1 } = params;
   
   // Basic potential energy calculation: Ep = mgh
   const potentialEnergy = loadMass * GRAVITY * height;
+  
+  // Project-specific energy calculations
+  const projectEnergy = calculateProjectEnergy(loadMass, height, material);
   
   // Material-specific efficiency calculation
   const materialEfficiency = (material.efficiency.min + material.efficiency.max) / 2;
@@ -24,13 +62,16 @@ export const calculateGESSResults = (params: GESSParameters): EnergyResults => {
   // Initial recovered energy
   const initialRecoveredEnergy = potentialEnergy * combinedEfficiency;
   
+  // Apply self-discharge
+  const recoveredEnergyAfterDischarge = simulateSelfDischarge(initialRecoveredEnergy, material, timeElapsed);
+  
   // Degradation model based on material properties and cycle count
   const degradationRate = material.efficiencyLoss;
   const totalDegradation = Math.min(0.5, degradationRate * cycles / material.lifespanCycles);
   const averageEfficiency = combinedEfficiency * (1 - totalDegradation / 2);
   
   // Final recovered energy accounting for degradation
-  const recoveredEnergy = potentialEnergy * averageEfficiency;
+  const recoveredEnergy = recoveredEnergyAfterDischarge * averageEfficiency;
   
   // Power loss calculation
   const powerLoss = potentialEnergy - recoveredEnergy;
@@ -55,6 +96,8 @@ export const calculateGESSResults = (params: GESSParameters): EnergyResults => {
   return {
     potentialEnergy,
     recoveredEnergy,
+    inputEnergy: projectEnergy.input * 3.6e6, // Convert back to Joules
+    outputEnergy: projectEnergy.output * 3.6e6, // Convert back to Joules
     powerLoss,
     totalLifespan: Math.floor(effectiveLifespan),
     volumeRequired,
@@ -63,6 +106,8 @@ export const calculateGESSResults = (params: GESSParameters): EnergyResults => {
     roundTripEfficiency,
     selfDischargeRate: material.selfDischargeRate,
     degradationRate: totalDegradation * 100,
+    projectEfficiency: projectEnergy.efficiency,
+    powerOutput: material.powerOutput || { min: 0, max: 0, duration: 'N/A' },
   };
 };
 
