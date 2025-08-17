@@ -3,7 +3,7 @@ import { Zap, BarChart3 } from 'lucide-react';
 import ParameterControls from './components/ParameterControls';
 import ResultsPanel from './components/ResultsPanel';
 import ChartsSection from './components/ChartsSection';
-import OptimizationPanel from './components/OptimizationPanel';
+import { OptimizationPanel } from './components/OptimizationPanel';
 import { MATERIALS } from './data/materials';
 import { calculateGESSResults } from './utils/calculations';
 
