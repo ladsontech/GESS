@@ -153,6 +153,14 @@ function App() {
       {/* Footer */}
       <footer className="bg-white border-t mt-12">
         <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="text-center mb-4">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">Designed by:</h3>
+            <div className="space-y-1 text-gray-600">
+              <p>Akellogum Charity, 23/U/BEL/14672/PD, Year 3</p>
+              <p>Ocen Emmanuel, 23/U/BET/2391/PE, Year 3</p>
+              <p>Ikwap Benard, 22/U/BEL/1432/PD, Year 3</p>
+            </div>
+          </div>
           <div className="text-center text-gray-600">
             <p className="text-sm">
               GESS Research Analysis Platform - Project validation with 81% round-trip efficiency (Table 3.2)

@@ -139,28 +139,6 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
         </div>
       </div>
 
-      {/* Cost vs Performance Analysis */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="mb-4">
-          <h3 className="text-lg font-bold text-gray-800">Cost vs Performance Analysis</h3>
-          <p className="text-sm text-gray-600">Efficiency vs relative cost comparison (bubble size = energy density)</p>
-        </div>
-        <ResponsiveContainer width="100%" height={400}>
-          <ScatterChart data={energyDensityData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="cost" label={{ value: 'Relative Cost', position: 'insideBottom', offset: -5 }} />
-            <YAxis dataKey="efficiency" label={{ value: 'Round-Trip Efficiency (%)', angle: -90, position: 'insideLeft' }} />
-            <Tooltip formatter={(value: any, name: string) => {
-              if (name === 'efficiency') return [`${value.toFixed(1)}%`, 'Efficiency'];
-              if (name === 'cost') return [value, 'Relative Cost'];
-              return [value, name];
-            }} />
-            <Legend />
-            <Scatter name="Materials" dataKey="efficiency" fill="#8884d8" />
-          </ScatterChart>
-        </ResponsiveContainer>
-      </div>
-
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="mb-4">
           <h3 className="text-lg font-bold text-gray-800">Multi-Dimensional Performance Analysis</h3>
