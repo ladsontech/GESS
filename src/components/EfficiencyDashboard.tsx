@@ -28,61 +28,63 @@ const EfficiencyDashboard: React.FC<EfficiencyDashboardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="mb-6">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <TrendingUp className="text-blue-600" size={24} />
+    <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl p-8 border border-blue-100">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+          <div className="p-2 bg-blue-500 rounded-lg">
+            <TrendingUp className="text-white" size={24} />
+          </div>
           Energy Metrics Dashboard
         </h2>
-        <p className="text-sm text-gray-600 mt-1">
-          {loadMass.toLocaleString()} kg @ {height}m using {material.name}
+        <p className="text-sm text-gray-600 mt-2 ml-14">
+          {loadMass.toLocaleString()} kg @ {height}m using <span className="font-semibold text-blue-600">{material.name}</span>
         </p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-blue-50 rounded-lg p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Battery className="text-blue-600" size={20} />
-            <span className="text-sm font-medium text-gray-700">Potential</span>
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-5 card-hover cursor-pointer border border-blue-200">
+          <div className="flex items-center gap-2 mb-3">
+            <Battery className="text-blue-600" size={22} />
+            <span className="text-sm font-semibold text-gray-700">Potential</span>
           </div>
-          <div className="text-2xl font-bold text-blue-600">
+          <div className="text-3xl font-bold text-blue-700">
             {formatEnergy(projectEnergy.potential)}
           </div>
         </div>
 
-        <div className="bg-red-50 rounded-lg p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Zap className="text-red-600" size={20} />
-            <span className="text-sm font-medium text-gray-700">Input (Lift)</span>
+        <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-5 card-hover cursor-pointer border border-red-200">
+          <div className="flex items-center gap-2 mb-3">
+            <Zap className="text-red-600" size={22} />
+            <span className="text-sm font-semibold text-gray-700">Input (Lift)</span>
           </div>
-          <div className="text-2xl font-bold text-red-600">
+          <div className="text-3xl font-bold text-red-700">
             {formatEnergy(projectEnergy.input)}
           </div>
         </div>
 
-        <div className="bg-green-50 rounded-lg p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Zap className="text-green-600" size={20} />
-            <span className="text-sm font-medium text-gray-700">Output (Gen)</span>
+        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-5 card-hover cursor-pointer border border-green-200">
+          <div className="flex items-center gap-2 mb-3">
+            <Zap className="text-green-600" size={22} />
+            <span className="text-sm font-semibold text-gray-700">Output (Gen)</span>
           </div>
-          <div className="text-2xl font-bold text-green-600">
+          <div className="text-3xl font-bold text-green-700">
             {formatEnergy(energyAfterDischarge)}
           </div>
         </div>
 
-        <div className="bg-purple-50 rounded-lg p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <TrendingUp className="text-purple-600" size={20} />
-            <span className="text-sm font-medium text-gray-700">Efficiency</span>
+        <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-5 card-hover cursor-pointer border border-purple-200">
+          <div className="flex items-center gap-2 mb-3">
+            <TrendingUp className="text-purple-600" size={22} />
+            <span className="text-sm font-semibold text-gray-700">Efficiency</span>
           </div>
-          <div className="text-2xl font-bold text-purple-600">
+          <div className="text-3xl font-bold text-purple-700">
             {projectEnergy.efficiency.toFixed(1)}%
           </div>
         </div>
       </div>
 
       {/* Self-Discharge Indicator */}
-      <div className="bg-gray-50 rounded-lg p-4">
+      <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl p-5 border border-gray-200">
         <h3 className="font-semibold text-gray-700 mb-3 flex items-center gap-2">
           <Clock size={18} />
           Self-Discharge Analysis
@@ -118,7 +120,7 @@ const EfficiencyDashboard: React.FC<EfficiencyDashboardProps> = ({
 
       {/* Power Output Characteristics */}
       {material.powerOutput && (
-        <div className="mt-4 bg-gray-50 rounded-lg p-4">
+        <div className="mt-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-5 border border-amber-200">
           <h3 className="font-semibold text-gray-700 mb-3">Power Output Characteristics</h3>
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>

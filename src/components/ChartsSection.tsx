@@ -1,22 +1,23 @@
 import React from 'react';
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
-  LineChart,
-  Line,
   RadarChart,
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
   Radar,
-  ScatterChart,
+  ComposedChart,
   Scatter,
   ResponsiveContainer,
+  Cell,
+  PieChart,
+  Pie,
 } from 'recharts';
 import { 
   generateComparisonData, 
@@ -52,50 +53,99 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
     'Cost Effectiveness': Math.min(100, material.costEffectiveness * 5), // Scaled
   }));
 
+  const COLORS = ['#3498db', '#f1c40f', '#95a5a6'];
+
+  const efficiencyPieData = comparisonData.map((item) => ({
+    name: item.material,
+    value: item.efficiency,
+    color: item.color,
+  }));
+
+  const energyDistributionData = comparisonData.map((item) => ({
+    name: item.material,
+    value: item.recoveredEnergy,
+    color: item.color,
+  }));
+
   return (
     <div className="space-y-8">
-      {/* Energy Density Comparison */}
+      {/* Energy Density Comparison - Radial Display */}
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="mb-4">
           <h3 className="text-lg font-bold text-gray-800">Energy Density Comparison</h3>
           <p className="text-sm text-gray-600">Comparative analysis of energy storage density by material</p>
         </div>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={energyDensityData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="material" />
-            <YAxis label={{ value: 'Energy Density (kWh/m³)', angle: -90, position: 'insideLeft' }} />
-            <Tooltip formatter={(value: any, name: string) => {
-              if (name === 'energyDensity') return [`${value.toFixed(1)} kWh/m³`, 'Energy Density'];
-              return [value, name];
-            }} />
-            <Legend />
-            <Bar dataKey="energyDensity" fill="#4A90E2" name="Energy Density (kWh/m³)" />
-          </BarChart>
-        </ResponsiveContainer>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={energyDensityData}
+                dataKey="energyDensity"
+                nameKey="material"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                label={(entry) => `${entry.material}: ${entry.energyDensity.toFixed(2)} kWh/m³`}
+                labelLine={true}
+              >
+                {energyDensityData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip formatter={(value: any) => `${value.toFixed(2)} kWh/m³`} />
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="flex flex-col justify-center space-y-4">
+            {energyDensityData.map((material) => (
+              <div key={material.material} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: material.color }} />
+                  <span className="font-medium text-gray-700">{material.material}</span>
+                </div>
+                <div className="text-right">
+                  <div className="font-bold text-gray-900">{material.energyDensity.toFixed(2)} kWh/m³</div>
+                  <div className="text-xs text-gray-500">{material.efficiency.toFixed(1)}% efficiency</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Material Performance Overview */}
+      {/* Material Performance Overview - Composed Chart */}
       <div className="bg-white rounded-lg shadow-lg p-6">
         <div className="mb-4">
           <h3 className="text-lg font-bold text-gray-800">Material Performance Overview</h3>
           <p className="text-sm text-gray-600">Comprehensive comparison of all performance metrics</p>
         </div>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={comparisonData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="material" />
-            <YAxis label={{ value: 'Energy (MJ) / Efficiency (%)', angle: -90, position: 'insideLeft' }} />
-            <Tooltip formatter={(value: any, name: string) => {
-              if (name === 'efficiency') return [`${value.toFixed(1)}%`, 'Round-Trip Efficiency'];
-              if (name === 'recoveredEnergy') return [`${value.toFixed(2)} MJ`, 'Recovered Energy'];
-              if (name === 'energyDensity') return [`${value.toFixed(1)} kWh/m³`, 'Energy Density'];
-              return [value, name];
-            }} />
+        <ResponsiveContainer width="100%" height={350}>
+          <ComposedChart data={comparisonData}>
+            <defs>
+              <linearGradient id="colorEnergy" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#3498db" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="#3498db" stopOpacity={0.1}/>
+              </linearGradient>
+              <linearGradient id="colorEfficiency" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#2ecc71" stopOpacity={0.8}/>
+                <stop offset="95%" stopColor="#2ecc71" stopOpacity={0.1}/>
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis dataKey="material" tick={{ fill: '#666' }} />
+            <YAxis yAxisId="left" label={{ value: 'Energy (MJ)', angle: -90, position: 'insideLeft' }} tick={{ fill: '#666' }} />
+            <YAxis yAxisId="right" orientation="right" label={{ value: 'Efficiency (%)', angle: 90, position: 'insideRight' }} tick={{ fill: '#666' }} />
+            <Tooltip
+              contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', border: '1px solid #ddd', borderRadius: '8px' }}
+              formatter={(value: any, name: string) => {
+                if (name === 'efficiency') return [`${value.toFixed(1)}%`, 'Round-Trip Efficiency'];
+                if (name === 'recoveredEnergy') return [`${value.toFixed(2)} MJ`, 'Recovered Energy'];
+                return [value, name];
+              }}
+            />
             <Legend />
-            <Bar dataKey="recoveredEnergy" fill="#3498db" name="Recovered Energy (MJ)" />
-            <Bar dataKey="efficiency" fill="#2ecc71" name="Round-Trip Efficiency (%)" />
-          </BarChart>
+            <Area yAxisId="left" type="monotone" dataKey="recoveredEnergy" fill="url(#colorEnergy)" stroke="#3498db" strokeWidth={3} name="Recovered Energy (MJ)" />
+            <Scatter yAxisId="right" dataKey="efficiency" fill="#2ecc71" name="Round-Trip Efficiency (%)" />
+          </ComposedChart>
         </ResponsiveContainer>
       </div>
 
@@ -106,16 +156,33 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
             <p className="text-sm text-gray-600">Linear relationship: E ∝ m (at constant height)</p>
           </div>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={massEnergyData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="mass" label={{ value: 'Mass (kg)', position: 'insideBottom', offset: -5 }} />
-              <YAxis label={{ value: 'Recovered Energy (MJ)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value: any, name: string) => [`${value.toFixed(2)} MJ`, name]} />
+            <AreaChart data={massEnergyData}>
+              <defs>
+                <linearGradient id="sandGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#f1c40f" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#f1c40f" stopOpacity={0.1}/>
+                </linearGradient>
+                <linearGradient id="waterGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3498db" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#3498db" stopOpacity={0.1}/>
+                </linearGradient>
+                <linearGradient id="concreteGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#7f8c8d" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#7f8c8d" stopOpacity={0.1}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+              <XAxis dataKey="mass" label={{ value: 'Mass (kg)', position: 'insideBottom', offset: -5 }} tick={{ fill: '#666' }} />
+              <YAxis label={{ value: 'Recovered Energy (MJ)', angle: -90, position: 'insideLeft' }} tick={{ fill: '#666' }} />
+              <Tooltip
+                contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', border: '1px solid #ddd', borderRadius: '8px' }}
+                formatter={(value: any, name: string) => [`${value.toFixed(2)} MJ`, name]}
+              />
               <Legend />
-              <Line type="monotone" dataKey="sand" stroke="#f1c40f" strokeWidth={3} name="Sand" />
-              <Line type="monotone" dataKey="water" stroke="#3498db" strokeWidth={3} name="Water" />
-              <Line type="monotone" dataKey="concrete" stroke="#7f8c8d" strokeWidth={3} name="Concrete" />
-            </LineChart>
+              <Area type="monotone" dataKey="sand" stroke="#f1c40f" fill="url(#sandGradient)" strokeWidth={2} name="Sand" />
+              <Area type="monotone" dataKey="water" stroke="#3498db" fill="url(#waterGradient)" strokeWidth={2} name="Water" />
+              <Area type="monotone" dataKey="concrete" stroke="#7f8c8d" fill="url(#concreteGradient)" strokeWidth={2} name="Concrete" />
+            </AreaChart>
           </ResponsiveContainer>
         </div>
 
@@ -125,16 +192,33 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
             <p className="text-sm text-gray-600">Linear relationship: E ∝ h (at constant mass)</p>
           </div>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={heightEnergyData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="height" label={{ value: 'Height (m)', position: 'insideBottom', offset: -5 }} />
-              <YAxis label={{ value: 'Recovered Energy (MJ)', angle: -90, position: 'insideLeft' }} />
-              <Tooltip formatter={(value: any, name: string) => [`${value.toFixed(2)} MJ`, name]} />
+            <AreaChart data={heightEnergyData}>
+              <defs>
+                <linearGradient id="sandHeightGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#f1c40f" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#f1c40f" stopOpacity={0.1}/>
+                </linearGradient>
+                <linearGradient id="waterHeightGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#3498db" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#3498db" stopOpacity={0.1}/>
+                </linearGradient>
+                <linearGradient id="concreteHeightGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#7f8c8d" stopOpacity={0.8}/>
+                  <stop offset="95%" stopColor="#7f8c8d" stopOpacity={0.1}/>
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+              <XAxis dataKey="height" label={{ value: 'Height (m)', position: 'insideBottom', offset: -5 }} tick={{ fill: '#666' }} />
+              <YAxis label={{ value: 'Recovered Energy (MJ)', angle: -90, position: 'insideLeft' }} tick={{ fill: '#666' }} />
+              <Tooltip
+                contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.95)', border: '1px solid #ddd', borderRadius: '8px' }}
+                formatter={(value: any, name: string) => [`${value.toFixed(2)} MJ`, name]}
+              />
               <Legend />
-              <Line type="monotone" dataKey="sand" stroke="#f1c40f" strokeWidth={3} name="Sand" />
-              <Line type="monotone" dataKey="water" stroke="#3498db" strokeWidth={3} name="Water" />
-              <Line type="monotone" dataKey="concrete" stroke="#7f8c8d" strokeWidth={3} name="Concrete" />
-            </LineChart>
+              <Area type="monotone" dataKey="sand" stroke="#f1c40f" fill="url(#sandHeightGradient)" strokeWidth={2} name="Sand" />
+              <Area type="monotone" dataKey="water" stroke="#3498db" fill="url(#waterHeightGradient)" strokeWidth={2} name="Water" />
+              <Area type="monotone" dataKey="concrete" stroke="#7f8c8d" fill="url(#concreteHeightGradient)" strokeWidth={2} name="Concrete" />
+            </AreaChart>
           </ResponsiveContainer>
         </div>
       </div>
