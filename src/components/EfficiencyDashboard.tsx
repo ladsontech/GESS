@@ -28,91 +28,93 @@ const EfficiencyDashboard: React.FC<EfficiencyDashboardProps> = ({
   };
 
   return (
-    <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl p-8 border border-blue-100">
-      <div className="mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-          <div className="p-2 bg-blue-500 rounded-lg">
-            <TrendingUp className="text-white" size={24} />
+    <div className="bg-tech-900 border-2 border-tech-700 rounded p-6">
+      <div className="mb-6 border-b-2 border-tech-800 pb-4">
+        <h2 className="text-lg font-bold text-tech-100 flex items-center gap-3 font-mono tracking-wide">
+          <div className="p-1.5 bg-tech-800 border-2 border-tech-600 rounded">
+            <TrendingUp className="text-tech-400" size={20} />
           </div>
-          Energy Metrics Dashboard
+          ENERGY METRICS DASHBOARD
         </h2>
-        <p className="text-sm text-gray-600 mt-2 ml-14">
-          {loadMass.toLocaleString()} kg @ {height}m using <span className="font-semibold text-blue-600">{material.name}</span>
+        <p className="text-xs text-tech-400 mt-2 ml-11 font-mono">
+          LOAD: <span className="text-tech-200">{loadMass.toLocaleString()}</span> kg • 
+          HEIGHT: <span className="text-tech-200">{height}</span>m • 
+          MATERIAL: <span className="text-tech-200">{material.name.toUpperCase()}</span>
         </p>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-5 card-hover cursor-pointer border border-blue-200">
-          <div className="flex items-center gap-2 mb-3">
-            <Battery className="text-blue-600" size={22} />
-            <span className="text-sm font-semibold text-gray-700">Potential</span>
+        <div className="bg-tech-800 border-2 border-tech-700 rounded p-4 hover:border-tech-600 transition-colors">
+          <div className="flex items-center gap-2 mb-2">
+            <Battery className="text-tech-400" size={18} />
+            <span className="text-xs font-mono font-semibold text-tech-300">POTENTIAL</span>
           </div>
-          <div className="text-3xl font-bold text-blue-700">
+          <div className="text-2xl font-mono font-bold text-tech-100">
             {formatEnergy(projectEnergy.potential)}
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-5 card-hover cursor-pointer border border-red-200">
-          <div className="flex items-center gap-2 mb-3">
-            <Zap className="text-red-600" size={22} />
-            <span className="text-sm font-semibold text-gray-700">Input (Lift)</span>
+        <div className="bg-tech-800 border-2 border-tech-700 rounded p-4 hover:border-tech-600 transition-colors">
+          <div className="flex items-center gap-2 mb-2">
+            <Zap className="text-tech-400" size={18} />
+            <span className="text-xs font-mono font-semibold text-tech-300">INPUT (LIFT)</span>
           </div>
-          <div className="text-3xl font-bold text-red-700">
+          <div className="text-2xl font-mono font-bold text-tech-100">
             {formatEnergy(projectEnergy.input)}
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-5 card-hover cursor-pointer border border-green-200">
-          <div className="flex items-center gap-2 mb-3">
-            <Zap className="text-green-600" size={22} />
-            <span className="text-sm font-semibold text-gray-700">Output (Gen)</span>
+        <div className="bg-tech-800 border-2 border-tech-700 rounded p-4 hover:border-tech-600 transition-colors">
+          <div className="flex items-center gap-2 mb-2">
+            <Zap className="text-tech-400" size={18} />
+            <span className="text-xs font-mono font-semibold text-tech-300">OUTPUT (GEN)</span>
           </div>
-          <div className="text-3xl font-bold text-green-700">
+          <div className="text-2xl font-mono font-bold text-tech-100">
             {formatEnergy(energyAfterDischarge)}
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-5 card-hover cursor-pointer border border-purple-200">
-          <div className="flex items-center gap-2 mb-3">
-            <TrendingUp className="text-purple-600" size={22} />
-            <span className="text-sm font-semibold text-gray-700">Efficiency</span>
+        <div className="bg-tech-800 border-2 border-tech-700 rounded p-4 hover:border-tech-600 transition-colors">
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp className="text-tech-400" size={18} />
+            <span className="text-xs font-mono font-semibold text-tech-300">EFFICIENCY</span>
           </div>
-          <div className="text-3xl font-bold text-purple-700">
+          <div className="text-2xl font-mono font-bold text-tech-100">
             {projectEnergy.efficiency.toFixed(1)}%
           </div>
         </div>
       </div>
 
       {/* Self-Discharge Indicator */}
-      <div className="bg-gradient-to-r from-gray-50 to-slate-50 rounded-xl p-5 border border-gray-200">
-        <h3 className="font-semibold text-gray-700 mb-3 flex items-center gap-2">
-          <Clock size={18} />
-          Self-Discharge Analysis
+      <div className="bg-tech-800 border-2 border-tech-700 rounded p-4">
+        <h3 className="font-mono font-semibold text-tech-200 text-xs mb-3 flex items-center gap-2 tracking-wide">
+          <Clock size={16} />
+          SELF-DISCHARGE ANALYSIS
         </h3>
         
         {material.name === 'Water' ? (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
-              <span className="text-sm text-gray-600">Evaporation Effect</span>
+              <div className="w-2 h-2 bg-red-500 rounded-sm animate-pulse"></div>
+              <span className="text-xs text-tech-300 font-mono">EVAPORATION EFFECT</span>
             </div>
             <div className="text-right">
-              <div className="text-sm font-medium text-red-600">
-                {material.selfDischargeRate}%/hr loss
+              <div className="text-xs font-mono font-medium text-tech-200">
+                {material.selfDischargeRate}%/HR LOSS
               </div>
-              <div className="text-xs text-gray-500">
-                After {timeElapsed}h: {formatEnergy(energyAfterDischarge)}
+              <div className="text-xs text-tech-400 font-mono">
+                {timeElapsed}H: {formatEnergy(energyAfterDischarge)}
               </div>
             </div>
           </div>
         ) : (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-              <span className="text-sm text-gray-600">Solid Material</span>
+              <div className="w-2 h-2 bg-green-500 rounded-sm"></div>
+              <span className="text-xs text-tech-300 font-mono">SOLID MATERIAL</span>
             </div>
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-green-100 text-green-800 font-medium">
-              Zero Loss
+            <div className="inline-flex items-center px-2 py-1 border border-tech-600 rounded text-xs bg-tech-900 text-tech-200 font-mono">
+              ZERO LOSS
             </div>
           </div>
         )}
@@ -120,26 +122,26 @@ const EfficiencyDashboard: React.FC<EfficiencyDashboardProps> = ({
 
       {/* Power Output Characteristics */}
       {material.powerOutput && (
-        <div className="mt-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-5 border border-amber-200">
-          <h3 className="font-semibold text-gray-700 mb-3">Power Output Characteristics</h3>
+        <div className="mt-4 bg-tech-800 border-2 border-tech-700 rounded p-4">
+          <h3 className="font-mono font-semibold text-tech-200 text-xs mb-3 tracking-wide">POWER OUTPUT CHARACTERISTICS</h3>
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
-              <div className="text-lg font-bold text-gray-800">
+              <div className="text-base font-mono font-bold text-tech-100">
                 {material.powerOutput.min}-{material.powerOutput.max}
               </div>
-              <div className="text-xs text-gray-600">kW Range</div>
+              <div className="text-xs text-tech-400 font-mono">kW RANGE</div>
             </div>
             <div>
-              <div className="text-lg font-bold text-gray-800">
-                {material.powerOutput.duration}
+              <div className="text-base font-mono font-bold text-tech-100">
+                {material.powerOutput.duration.toUpperCase()}
               </div>
-              <div className="text-xs text-gray-600">Duration</div>
+              <div className="text-xs text-tech-400 font-mono">DURATION</div>
             </div>
             <div>
-              <div className="text-lg font-bold text-gray-800">
-                {material.name}
+              <div className="text-base font-mono font-bold text-tech-100">
+                {material.name.toUpperCase()}
               </div>
-              <div className="text-xs text-gray-600">Material</div>
+              <div className="text-xs text-tech-400 font-mono">MATERIAL</div>
             </div>
           </div>
         </div>

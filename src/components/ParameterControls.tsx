@@ -17,20 +17,20 @@ interface ParameterControlsProps {
 }
 
 const MaterialInfo: React.FC<{ material: Material }> = ({ material }) => (
-  <div className="mt-2 p-3 bg-gray-50 rounded-lg text-xs">
+  <div className="mt-2 p-3 bg-tech-800 border border-tech-700 rounded text-xs">
     <div className="flex items-center gap-1 mb-2">
-      <Info size={12} className="text-gray-500" />
-      <span className="font-medium text-gray-700">Material Properties</span>
+      <Info size={12} className="text-tech-400" />
+      <span className="font-mono font-medium text-tech-300">MATERIAL PROPERTIES</span>
     </div>
-    <div className="space-y-1 text-gray-600">
-      <div>Density: {material.density} kg/m³</div>
-      <div>Efficiency: {(material.efficiency.min * 100).toFixed(0)}-{(material.efficiency.max * 100).toFixed(0)}%</div>
-      <div>Lifespan: {material.lifespanCycles.toLocaleString()} cycles</div>
-      <div>Self-discharge: {material.selfDischargeRate}%/day</div>
+    <div className="space-y-1 text-tech-400 font-mono">
+      <div>DENSITY: <span className="text-tech-200">{material.density}</span> kg/m³</div>
+      <div>EFFICIENCY: <span className="text-tech-200">{(material.efficiency.min * 100).toFixed(0)}-{(material.efficiency.max * 100).toFixed(0)}%</span></div>
+      <div>LIFESPAN: <span className="text-tech-200">{material.lifespanCycles.toLocaleString()}</span> cycles</div>
+      <div>SELF-DISCHARGE: <span className="text-tech-200">{material.selfDischargeRate}%/day</span></div>
       <div className="flex flex-wrap gap-1 mt-2">
         {material.properties.map((prop, idx) => (
-          <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs">
-            {prop}
+          <span key={idx} className="px-2 py-1 bg-tech-900 border border-tech-600 text-tech-300 rounded text-xs">
+            {prop.toUpperCase()}
           </span>
         ))}
       </div>
@@ -51,29 +51,29 @@ const ParameterControls: React.FC<ParameterControlsProps> = ({
   onCyclesChange,
 }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <div className="flex items-center gap-2 mb-6">
-        <Settings className="text-blue-600" size={24} />
+    <div className="bg-tech-900 border-2 border-tech-700 rounded p-6">
+      <div className="flex items-center gap-2 mb-6 border-b-2 border-tech-800 pb-4">
+        <Settings className="text-tech-400" size={20} />
         <div>
-          <h2 className="text-xl font-bold text-gray-800">System Parameters</h2>
-          <p className="text-sm text-gray-600">Configure GESS storage medium and operational parameters</p>
+          <h2 className="text-sm font-bold text-tech-100 font-mono tracking-wide">SYSTEM PARAMETERS</h2>
+          <p className="text-xs text-tech-400 font-mono">CONFIGURE STORAGE MEDIUM & OPERATIONS</p>
         </div>
       </div>
       
       <div className="space-y-6">
         {/* Material Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
-            Storage Medium Selection
+          <label className="block text-xs font-mono font-medium text-tech-300 mb-3 tracking-wide">
+            STORAGE MEDIUM SELECTION
           </label>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {Object.values(MATERIALS).map((material) => (
               <div
                 key={material.name}
-                className={`border-2 rounded-lg transition-all ${
+                className={`border-2 rounded transition-all ${
                   selectedMaterial.name === material.name
-                    ? 'border-blue-500 bg-blue-50'
-                    : 'border-gray-200 hover:border-gray-300'
+                    ? 'border-tech-500 bg-tech-800'
+                    : 'border-tech-700 hover:border-tech-600 bg-tech-800/50'
                 }`}
               >
                 <button
@@ -82,13 +82,13 @@ const ParameterControls: React.FC<ParameterControlsProps> = ({
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className="w-4 h-4 rounded-full"
+                      className="w-3 h-3 rounded-sm"
                       style={{ backgroundColor: material.color }}
                     />
                     <div>
-                      <div className="text-sm font-medium">{material.name}</div>
-                      <div className="text-xs text-gray-500">
-                        {material.density} kg/m³ • Cost: {'$'.repeat(material.relativeCost)}
+                      <div className="text-xs font-mono font-medium text-tech-100">{material.name.toUpperCase()}</div>
+                      <div className="text-xs text-tech-400 font-mono">
+                        {material.density} kg/m³ • COST: {'$'.repeat(material.relativeCost)}
                       </div>
                     </div>
                   </div>
@@ -103,8 +103,8 @@ const ParameterControls: React.FC<ParameterControlsProps> = ({
 
         {/* Load Mass */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Load Mass: {loadMass.toLocaleString()} kg
+          <label className="block text-xs font-mono font-medium text-tech-300 mb-2 tracking-wide">
+            LOAD MASS: <span className="text-tech-100">{loadMass.toLocaleString()}</span> kg
           </label>
           <input
             type="range"
@@ -113,18 +113,18 @@ const ParameterControls: React.FC<ParameterControlsProps> = ({
             step="100"
             value={loadMass}
             onChange={(e) => onLoadMassChange(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+            className="w-full h-2 rounded appearance-none cursor-pointer slider"
           />
-          <div className="flex justify-between text-xs text-gray-500 mt-1">
-            <span>1,000 kg</span>
-            <span>10,000 kg</span>
+          <div className="flex justify-between text-xs text-tech-500 mt-1 font-mono">
+            <span>1K</span>
+            <span>10K</span>
           </div>
         </div>
 
         {/* Height */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Lift Height: {height} m (Research Range: 50-200m)
+          <label className="block text-xs font-mono font-medium text-tech-300 mb-2 tracking-wide">
+            LIFT HEIGHT: <span className="text-tech-100">{height}</span> m
           </label>
           <input
             type="range"
@@ -133,18 +133,18 @@ const ParameterControls: React.FC<ParameterControlsProps> = ({
             step="1"
             value={height}
             onChange={(e) => onHeightChange(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+            className="w-full h-2 rounded appearance-none cursor-pointer slider"
           />
-          <div className="flex justify-between text-xs text-gray-500 mt-1">
-            <span>50 m</span>
-            <span>200 m</span>
+          <div className="flex justify-between text-xs text-tech-500 mt-1 font-mono">
+            <span>50m</span>
+            <span>200m</span>
           </div>
         </div>
 
         {/* System Efficiency */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            System Efficiency: {systemEfficiency}% (Mechanical losses)
+          <label className="block text-xs font-mono font-medium text-tech-300 mb-2 tracking-wide">
+            SYSTEM EFFICIENCY: <span className="text-tech-100">{systemEfficiency}</span>%
           </label>
           <input
             type="range"
@@ -153,9 +153,9 @@ const ParameterControls: React.FC<ParameterControlsProps> = ({
             step="1"
             value={systemEfficiency}
             onChange={(e) => onSystemEfficiencyChange(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+            className="w-full h-2 rounded appearance-none cursor-pointer slider"
           />
-          <div className="flex justify-between text-xs text-gray-500 mt-1">
+          <div className="flex justify-between text-xs text-tech-500 mt-1 font-mono">
             <span>60%</span>
             <span>100%</span>
           </div>
@@ -163,8 +163,8 @@ const ParameterControls: React.FC<ParameterControlsProps> = ({
 
         {/* Cycles */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Operating Cycles: {cycles.toLocaleString()} (Lifetime analysis)
+          <label className="block text-xs font-mono font-medium text-tech-300 mb-2 tracking-wide">
+            OPERATING CYCLES: <span className="text-tech-100">{cycles.toLocaleString()}</span>
           </label>
           <input
             type="range"
@@ -173,23 +173,23 @@ const ParameterControls: React.FC<ParameterControlsProps> = ({
             step="100"
             value={cycles}
             onChange={(e) => onCyclesChange(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+            className="w-full h-2 rounded appearance-none cursor-pointer slider"
           />
-          <div className="flex justify-between text-xs text-gray-500 mt-1">
+          <div className="flex justify-between text-xs text-tech-500 mt-1 font-mono">
             <span>100</span>
-            <span>5,000</span>
+            <span>5K</span>
           </div>
         </div>
       </div>
       
       {/* Research Sources */}
-      <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-        <h3 className="text-sm font-semibold text-gray-700 mb-2">Research Sources</h3>
-        <div className="text-xs text-gray-600 space-y-1">
-          <div>• IRENA Pumped Hydro Storage Report (2020)</div>
-          <div>• Journal of Energy Storage - Granular Materials (2021)</div>
-          <div>• ARES Nevada Advanced Rail Technology (2019)</div>
-          <div>• IEEE Energy Storage Technologies Review (2022)</div>
+      <div className="mt-6 p-4 bg-tech-800 border border-tech-700 rounded">
+        <h3 className="text-xs font-mono font-semibold text-tech-300 mb-2 tracking-wide">RESEARCH SOURCES</h3>
+        <div className="text-xs text-tech-500 font-mono space-y-1">
+          <div>▸ IRENA PUMPED HYDRO (2020)</div>
+          <div>▸ J. ENERGY STORAGE (2021)</div>
+          <div>▸ ARES NEVADA RAIL TECH (2019)</div>
+          <div>▸ IEEE STORAGE REVIEW (2022)</div>
         </div>
       </div>
     </div>

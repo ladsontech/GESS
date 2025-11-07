@@ -70,10 +70,10 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
   return (
     <div className="space-y-8">
       {/* Energy Density Comparison - Radial Display */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="mb-4">
-          <h3 className="text-lg font-bold text-gray-800">Energy Density Comparison</h3>
-          <p className="text-sm text-gray-600">Comparative analysis of energy storage density by material</p>
+      <div className="bg-tech-900 border-2 border-tech-700 rounded p-6">
+        <div className="mb-4 border-b-2 border-tech-800 pb-3">
+          <h3 className="text-sm font-bold text-tech-100 font-mono tracking-wide">ENERGY DENSITY COMPARISON</h3>
+          <p className="text-xs text-tech-400 font-mono">COMPARATIVE ANALYSIS BY MATERIAL</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ResponsiveContainer width="100%" height={300}>
@@ -95,16 +95,16 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
               <Tooltip formatter={(value: any) => `${value.toFixed(2)} kWh/m³`} />
             </PieChart>
           </ResponsiveContainer>
-          <div className="flex flex-col justify-center space-y-4">
+          <div className="flex flex-col justify-center space-y-3">
             {energyDensityData.map((material) => (
-              <div key={material.material} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div key={material.material} className="flex items-center justify-between p-3 bg-tech-800 border border-tech-700 rounded">
                 <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: material.color }} />
-                  <span className="font-medium text-gray-700">{material.material}</span>
+                  <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: material.color }} />
+                  <span className="font-mono font-medium text-tech-100 text-xs">{material.material.toUpperCase()}</span>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-gray-900">{material.energyDensity.toFixed(2)} kWh/m³</div>
-                  <div className="text-xs text-gray-500">{material.efficiency.toFixed(1)}% efficiency</div>
+                  <div className="font-mono font-bold text-tech-100 text-sm">{material.energyDensity.toFixed(2)}</div>
+                  <div className="text-xs text-tech-400 font-mono">{material.efficiency.toFixed(1)}% EFF</div>
                 </div>
               </div>
             ))}
@@ -113,10 +113,10 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
       </div>
 
       {/* Material Performance Overview - Composed Chart */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="mb-4">
-          <h3 className="text-lg font-bold text-gray-800">Material Performance Overview</h3>
-          <p className="text-sm text-gray-600">Comprehensive comparison of all performance metrics</p>
+      <div className="bg-tech-900 border-2 border-tech-700 rounded p-6">
+        <div className="mb-4 border-b-2 border-tech-800 pb-3">
+          <h3 className="text-sm font-bold text-tech-100 font-mono tracking-wide">MATERIAL PERFORMANCE OVERVIEW</h3>
+          <p className="text-xs text-tech-400 font-mono">COMPREHENSIVE COMPARISON OF PERFORMANCE METRICS</p>
         </div>
         <ResponsiveContainer width="100%" height={350}>
           <ComposedChart data={comparisonData}>
@@ -150,10 +150,10 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <div className="mb-4">
-            <h3 className="text-lg font-bold text-gray-800">Recovered Energy vs Mass</h3>
-            <p className="text-sm text-gray-600">Linear relationship: E ∝ m (at constant height)</p>
+        <div className="bg-tech-900 border-2 border-tech-700 rounded p-6">
+          <div className="mb-4 border-b-2 border-tech-800 pb-3">
+            <h3 className="text-sm font-bold text-tech-100 font-mono tracking-wide">RECOVERED ENERGY VS MASS</h3>
+            <p className="text-xs text-tech-400 font-mono">LINEAR RELATIONSHIP: E ∝ m (CONSTANT HEIGHT)</p>
           </div>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={massEnergyData}>
@@ -186,10 +186,10 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <div className="mb-4">
-            <h3 className="text-lg font-bold text-gray-800">Recovered Energy vs Height</h3>
-            <p className="text-sm text-gray-600">Linear relationship: E ∝ h (at constant mass)</p>
+        <div className="bg-tech-900 border-2 border-tech-700 rounded p-6">
+          <div className="mb-4 border-b-2 border-tech-800 pb-3">
+            <h3 className="text-sm font-bold text-tech-100 font-mono tracking-wide">RECOVERED ENERGY VS HEIGHT</h3>
+            <p className="text-xs text-tech-400 font-mono">LINEAR RELATIONSHIP: E ∝ h (CONSTANT MASS)</p>
           </div>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={heightEnergyData}>
@@ -223,10 +223,10 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="mb-4">
-          <h3 className="text-lg font-bold text-gray-800">Multi-Dimensional Performance Analysis</h3>
-          <p className="text-sm text-gray-600">Comprehensive radar chart showing all key performance indicators</p>
+      <div className="bg-tech-900 border-2 border-tech-700 rounded p-6">
+        <div className="mb-4 border-b-2 border-tech-800 pb-3">
+          <h3 className="text-sm font-bold text-tech-100 font-mono tracking-wide">MULTI-DIMENSIONAL PERFORMANCE ANALYSIS</h3>
+          <p className="text-xs text-tech-400 font-mono">COMPREHENSIVE RADAR CHART • KEY PERFORMANCE INDICATORS</p>
         </div>
         <ResponsiveContainer width="100%" height={400}>
           <RadarChart data={radarData}>
@@ -271,25 +271,25 @@ const ChartsSection: React.FC<ChartsSectionProps> = ({
       </div>
       
       {/* Research Methodology */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Research Methodology & Sources</h3>
+      <div className="bg-tech-900 border-2 border-tech-700 rounded p-6">
+        <h3 className="text-sm font-bold text-tech-100 mb-4 font-mono tracking-wide border-b-2 border-tech-800 pb-3">RESEARCH METHODOLOGY & SOURCES</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h4 className="font-semibold text-gray-700 mb-2">Calculation Methods</h4>
-            <div className="text-sm text-gray-600 space-y-1">
-              <div>• Potential Energy: E<sub>p</sub> = mgh (Joules)</div>
-              <div>• Energy Density: E<sub>d</sub> = E<sub>recovered</sub> / Volume (kWh/m³)</div>
-              <div>• Round-Trip Efficiency: η = E<sub>out</sub> / E<sub>in</sub> × 100%</div>
-              <div>• Degradation Model: Linear efficiency loss over cycles</div>
+            <h4 className="font-mono font-semibold text-tech-200 mb-2 text-xs tracking-wide">CALCULATION METHODS</h4>
+            <div className="text-xs text-tech-400 font-mono space-y-1">
+              <div>▸ POTENTIAL ENERGY: E<sub>p</sub> = mgh (JOULES)</div>
+              <div>▸ ENERGY DENSITY: E<sub>d</sub> = E<sub>recovered</sub> / VOLUME (kWh/m³)</div>
+              <div>▸ ROUND-TRIP EFF: η = E<sub>out</sub> / E<sub>in</sub> × 100%</div>
+              <div>▸ DEGRADATION: LINEAR EFFICIENCY LOSS/CYCLE</div>
             </div>
           </div>
           <div>
-            <h4 className="font-semibold text-gray-700 mb-2">Data Sources</h4>
-            <div className="text-sm text-gray-600 space-y-1">
-              <div>• IRENA Pumped Hydro Storage Systems (2020)</div>
-              <div>• Journal of Energy Storage - Granular Materials (2021)</div>
-              <div>• ARES Nevada Advanced Rail Technology (2019)</div>
-              <div>• IEEE Energy Storage Technologies Review (2022)</div>
+            <h4 className="font-mono font-semibold text-tech-200 mb-2 text-xs tracking-wide">DATA SOURCES</h4>
+            <div className="text-xs text-tech-400 font-mono space-y-1">
+              <div>▸ IRENA PUMPED HYDRO (2020)</div>
+              <div>▸ J. ENERGY STORAGE (2021)</div>
+              <div>▸ ARES NEVADA RAIL TECH (2019)</div>
+              <div>▸ IEEE STORAGE REVIEW (2022)</div>
             </div>
           </div>
         </div>

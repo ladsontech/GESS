@@ -2,44 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom slider styles */
+/* Engineering-focused technical theme */
+@layer base {
+  body {
+    @apply bg-tech-950 text-tech-100;
+  }
+}
+
+/* Technical grid background */
+.tech-grid {
+  background-image: 
+    linear-gradient(rgba(100, 116, 139, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 116, 139, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Monospace number styling */
+.metric-value {
+  @apply font-mono font-bold tracking-tight;
+}
+
+/* Custom slider styles - technical theme */
 .slider {
-  background: linear-gradient(to right, #3B82F6 0%, #3B82F6 50%, #e5e7eb 50%, #e5e7eb 100%);
-  background-size: 200% 100%;
-  background-position: right bottom;
+  background: #1e293b;
+  border: 1px solid #475569;
 }
 
 .slider::-webkit-slider-thumb {
   appearance: none;
-  height: 24px;
-  width: 24px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  height: 18px;
+  width: 18px;
+  border-radius: 2px;
+  background: #64748b;
   cursor: pointer;
-  border: 3px solid #ffffff;
-  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid #94a3b8;
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.2);
+  transition: all 0.2s ease;
 }
 
 .slider::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(59, 130, 246, 0.5), 0 3px 6px rgba(0, 0, 0, 0.15);
+  background: #94a3b8;
+  border-color: #cbd5e1;
 }
 
 .slider::-moz-range-thumb {
-  height: 24px;
-  width: 24px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  height: 18px;
+  width: 18px;
+  border-radius: 2px;
+  background: #64748b;
   cursor: pointer;
-  border: 3px solid #ffffff;
-  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.4), 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 2px solid #94a3b8;
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.2);
+  transition: all 0.2s ease;
 }
 
 .slider::-moz-range-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(59, 130, 246, 0.5), 0 3px 6px rgba(0, 0, 0, 0.15);
+  background: #94a3b8;
+  border-color: #cbd5e1;
 }
 
 /* Animation keyframes */
