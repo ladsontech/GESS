@@ -29,41 +29,44 @@ function App() {
   }, [selectedMaterial, loadMass, height, systemEfficiency, cycles]);
 
   return (
-    <div className="min-h-screen bg-tech-950 tech-grid">
-      {/* Header */}
-      <header className="bg-tech-900 border-b-2 border-tech-700 shadow-2xl">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+    <div className="min-h-screen bg-matlab-bg">
+      {/* Header - Classic Toolbar Style */}
+      <header className="bg-matlab-toolbar border-b-2 border-matlab-dark" style={{
+        borderTop: '2px solid #FFFFFF',
+        boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.8), 0 2px 4px rgba(0,0,0,0.2)'
+      }}>
+        <div className="max-w-7xl mx-auto px-4 py-2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="p-2 bg-tech-800 border-2 border-tech-600 rounded">
-                <Zap className="text-tech-400" size={28} />
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-matlab-panel panel-raised">
+                <Zap className="text-matlab-blue" size={24} />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-tech-100 tracking-tight font-mono">
-                  GESS RESEARCH PLATFORM
+                <h1 className="text-lg font-bold text-matlab-text font-system">
+                  GESS Research Analysis Platform
                 </h1>
-                <p className="text-tech-400 mt-0.5 text-sm font-mono">
-                  GRAVITY ENERGY STORAGE SYSTEM • MATERIAL ANALYSIS & VALIDATION
+                <p className="text-matlab-dark text-xs">
+                  Gravity Energy Storage System - Material Analysis & Validation
                 </p>
               </div>
             </div>
-            <div className="hidden md:flex items-center gap-4">
-              <div className="px-3 py-2 bg-tech-800 border border-tech-700 rounded">
-                <div className="flex items-center gap-2 text-tech-300">
-                  <Battery size={16} />
-                  <span className="text-xs font-mono">ENERGY</span>
+            <div className="hidden md:flex items-center gap-2">
+              <div className="px-3 py-1 bg-matlab-panel panel-raised text-xs">
+                <div className="flex items-center gap-1 text-matlab-text">
+                  <Battery size={14} />
+                  <span>Energy</span>
                 </div>
               </div>
-              <div className="px-3 py-2 bg-tech-800 border border-tech-700 rounded">
-                <div className="flex items-center gap-2 text-tech-300">
-                  <TrendingUp size={16} />
-                  <span className="text-xs font-mono">PERFORMANCE</span>
+              <div className="px-3 py-1 bg-matlab-panel panel-raised text-xs">
+                <div className="flex items-center gap-1 text-matlab-text">
+                  <TrendingUp size={14} />
+                  <span>Performance</span>
                 </div>
               </div>
-              <div className="px-3 py-2 bg-tech-800 border border-tech-700 rounded">
-                <div className="flex items-center gap-2 text-tech-300">
-                  <Activity size={16} />
-                  <span className="text-xs font-mono">OPTIMIZATION</span>
+              <div className="px-3 py-1 bg-matlab-panel panel-raised text-xs">
+                <div className="flex items-center gap-1 text-matlab-text">
+                  <Activity size={14} />
+                  <span>Optimization</span>
                 </div>
               </div>
             </div>
@@ -100,11 +103,11 @@ function App() {
             />
             
             {/* Time Elapsed Control for Self-Discharge */}
-            <div className="bg-tech-900 border-2 border-tech-700 rounded p-6">
-              <h3 className="text-sm font-bold text-tech-200 mb-4 font-mono tracking-wide">SELF-DISCHARGE ANALYSIS</h3>
+            <div className="bg-matlab-panel panel-sunken p-4">
+              <h3 className="text-sm font-bold text-matlab-text mb-3 pb-2 border-b border-matlab-border">Self-Discharge Analysis</h3>
               <div>
-                <label className="block text-xs font-mono font-medium text-tech-300 mb-2">
-                  TIME ELAPSED: <span className="text-tech-100">{timeElapsed}</span> HOURS
+                <label className="block text-xs font-medium text-matlab-text mb-2">
+                  Time Elapsed: <span className="font-mono font-bold">{timeElapsed}</span> hours
                 </label>
                 <input
                   type="range"
@@ -113,18 +116,18 @@ function App() {
                   step="1"
                   value={timeElapsed}
                   onChange={(e) => setTimeElapsed(Number(e.target.value))}
-                  className="w-full h-2 rounded appearance-none cursor-pointer slider"
+                  className="w-full cursor-pointer slider"
                 />
-                <div className="flex justify-between text-xs text-tech-400 mt-1 font-mono">
-                  <span>1 HR</span>
-                  <span>24 HR</span>
+                <div className="flex justify-between text-xs text-matlab-dark mt-1">
+                  <span>1 hour</span>
+                  <span>24 hours</span>
                 </div>
               </div>
-              <div className="mt-3 text-xs text-tech-400 font-mono">
+              <div className="mt-3 p-2 bg-white border border-matlab-border text-xs">
                 {selectedMaterial.name === 'Water' ? (
-                  <p>⚠ WATER LOSS: {selectedMaterial.selfDischargeRate}%/HR (EVAPORATION)</p>
+                  <p className="text-red-700">⚠ Water loss: {selectedMaterial.selfDischargeRate}%/hr due to evaporation</p>
                 ) : (
-                  <p>✓ SOLID MATERIAL: ZERO SELF-DISCHARGE</p>
+                  <p className="text-green-700">✓ Solid material: Zero self-discharge</p>
                 )}
               </div>
             </div>
@@ -156,12 +159,12 @@ function App() {
 
         {/* Charts Section */}
         <div>
-          <div className="mb-8 text-center border-2 border-tech-800 bg-tech-900 p-6 rounded">
-            <h2 className="text-2xl font-bold text-tech-100 mb-3 font-mono tracking-wide">COMPARATIVE MATERIAL ANALYSIS</h2>
-            <p className="text-tech-400 max-w-3xl mx-auto text-sm font-mono">
-              PROJECT VALIDATION • RESEARCH-BASED ANALYSIS • TABLE 3.2 EFFICIENCY METRICS
+          <div className="mb-6 text-center bg-matlab-panel panel-raised p-4">
+            <h2 className="text-xl font-bold text-matlab-text mb-2">Comparative Material Analysis</h2>
+            <p className="text-matlab-dark max-w-3xl mx-auto text-sm">
+              Project validation and research-based analysis with Table 3.2 efficiency metrics
             </p>
-            <p className="text-tech-500 max-w-3xl mx-auto text-xs mt-2 font-mono">
+            <p className="text-matlab-dark max-w-3xl mx-auto text-xs mt-1">
               Interactive visualizations showing energy relationships and material performance characteristics
             </p>
           </div>
@@ -176,34 +179,36 @@ function App() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-tech-950 border-t-2 border-tech-800 text-tech-100 mt-16">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          <div className="text-center mb-6">
-            <h3 className="text-lg font-bold mb-4 font-mono tracking-wide">RESEARCH TEAM</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              <div className="bg-tech-900 border-2 border-tech-800 rounded p-4">
-                <p className="font-mono font-semibold text-tech-200">AKELLOGUM CHARITY</p>
-                <p className="text-xs text-tech-400 mt-1 font-mono">23/U/BEL/14672/PD</p>
-                <p className="text-xs text-tech-500 font-mono">YEAR 3</p>
+      <footer className="bg-matlab-toolbar border-t-2 border-matlab-dark text-matlab-text mt-12" style={{
+        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.1)'
+      }}>
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="text-center mb-4">
+            <h3 className="text-base font-bold mb-3">Research Team</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-4xl mx-auto">
+              <div className="bg-matlab-panel panel-raised p-3">
+                <p className="font-semibold text-matlab-text">Akellogum Charity</p>
+                <p className="text-xs text-matlab-dark mt-1">23/U/BEL/14672/PD</p>
+                <p className="text-xs text-matlab-dark">Year 3</p>
               </div>
-              <div className="bg-tech-900 border-2 border-tech-800 rounded p-4">
-                <p className="font-mono font-semibold text-tech-200">OCEN EMMANUEL</p>
-                <p className="text-xs text-tech-400 mt-1 font-mono">23/U/BET/2391/PE</p>
-                <p className="text-xs text-tech-500 font-mono">YEAR 3</p>
+              <div className="bg-matlab-panel panel-raised p-3">
+                <p className="font-semibold text-matlab-text">Ocen Emmanuel</p>
+                <p className="text-xs text-matlab-dark mt-1">23/U/BET/2391/PE</p>
+                <p className="text-xs text-matlab-dark">Year 3</p>
               </div>
-              <div className="bg-tech-900 border-2 border-tech-800 rounded p-4">
-                <p className="font-mono font-semibold text-tech-200">IKWAP BENARD</p>
-                <p className="text-xs text-tech-400 mt-1 font-mono">22/U/BEL/1432/PD</p>
-                <p className="text-xs text-tech-500 font-mono">YEAR 3</p>
+              <div className="bg-matlab-panel panel-raised p-3">
+                <p className="font-semibold text-matlab-text">Ikwap Benard</p>
+                <p className="text-xs text-matlab-dark mt-1">22/U/BEL/1432/PD</p>
+                <p className="text-xs text-matlab-dark">Year 3</p>
               </div>
             </div>
           </div>
-          <div className="text-center text-tech-400 border-t border-tech-800 pt-6">
-            <p className="text-xs mb-2 font-mono">
-              GESS RESEARCH ANALYSIS PLATFORM • 81% ROUND-TRIP EFFICIENCY (TABLE 3.2)
+          <div className="text-center text-matlab-dark border-t border-matlab-border pt-4">
+            <p className="text-xs mb-1">
+              GESS Research Analysis Platform - 81% round-trip efficiency (Table 3.2)
             </p>
-            <p className="text-xs text-tech-500 font-mono">
-              VALIDATED: IRENA (2020) • J. ENERGY STORAGE (2021) • ARES NEVADA (2019) • IEEE (2022)
+            <p className="text-xs">
+              Validated: IRENA (2020), J. Energy Storage (2021), ARES Nevada (2019), IEEE (2022)
             </p>
           </div>
         </div>
