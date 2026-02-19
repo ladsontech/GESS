@@ -6,6 +6,8 @@ import ChartsSection from './components/ChartsSection';
 import MaterialComparisonTable from './components/MaterialComparisonTable';
 import EfficiencyDashboard from './components/EfficiencyDashboard';
 import { OptimizationPanel } from './components/OptimizationPanel';
+import EfficiencyComparison from './components/EfficiencyComparison';
+import SchoolEnergyAnalytics from './components/SchoolEnergyAnalytics';
 import { MATERIALS } from './data/materials';
 import { calculateGESSResults } from './utils/calculations';
 
@@ -101,7 +103,7 @@ function App() {
               onSystemEfficiencyChange={setSystemEfficiency}
               onCyclesChange={setCycles}
             />
-            
+
             {/* Time Elapsed Control for Self-Discharge */}
             <div className="bg-matlab-panel panel-sunken p-4">
               <h3 className="text-sm font-bold text-matlab-text mb-3 pb-2 border-b border-matlab-border">Self-Discharge Analysis</h3>
@@ -152,6 +154,19 @@ function App() {
           </div>
         </div>
 
+        {/* Efficiency Comparison - NEW */}
+        <div className="mt-8">
+          <EfficiencyComparison />
+        </div>
+
+        {/* School Energy Analytics - NEW */}
+        <div className="mt-8">
+          <SchoolEnergyAnalytics
+            constantMass={loadMass}
+            constantHeight={height}
+          />
+        </div>
+
         {/* Material Comparison Table */}
         <div className="mt-12">
           <MaterialComparisonTable loadMass={loadMass} height={height} />
@@ -162,7 +177,7 @@ function App() {
           <div className="mb-6 text-center bg-matlab-panel panel-raised p-4">
             <h2 className="text-xl font-bold text-matlab-text mb-2">Comparative Material Analysis</h2>
             <p className="text-matlab-dark max-w-3xl mx-auto text-sm">
-              Project validation and research-based analysis with Table 3.2 efficiency metrics
+              Project validation and research-based analysis with material-specific efficiency metrics
             </p>
             <p className="text-matlab-dark max-w-3xl mx-auto text-xs mt-1">
               Interactive visualizations showing energy relationships and material performance characteristics
@@ -205,7 +220,7 @@ function App() {
           </div>
           <div className="text-center text-matlab-dark border-t border-matlab-border pt-4">
             <p className="text-xs mb-1">
-              GESS Research Analysis Platform - 81% round-trip efficiency (Table 3.2)
+              GESS Research Analysis Platform - Material-specific round-trip efficiencies: Water 69.7% | Sand 74.8% | Concrete 82.8%
             </p>
             <p className="text-xs">
               Validated: IRENA (2020), J. Energy Storage (2021), ARES Nevada (2019), IEEE (2022)

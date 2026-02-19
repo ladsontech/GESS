@@ -5,6 +5,8 @@ export interface Material {
   efficiencyLoss: number; // per cycle
   color: string;
   efficiency: { min: number; max: number }; // efficiency range
+  liftEfficiency: number; // decimal (0-1), material-specific lift efficiency
+  generationEfficiency: number; // decimal (0-1), material-specific generation efficiency
   flowRate?: { min: number; max: number }; // flow characteristics
   evaporationRate?: number; // for water only
   compactionFactor?: number; // for sand only
@@ -64,5 +66,21 @@ export interface ComparisonData {
   costEffectiveness: number;
   energyDensity: number;
   selfDischarge: number;
+  color: string;
+}
+
+export interface SchoolEnergyDemand {
+  name: string;
+  dailyEnergyKWh: number;
+  description: string;
+  typicalLoad: string; // e.g. "lighting, fans, computers"
+}
+
+export interface HeightRequirement {
+  material: string;
+  requiredHeight: number; // meters
+  requiredMass: number; // kg
+  targetEnergy: number; // kWh
+  roundTripEfficiency: number; // %
   color: string;
 }

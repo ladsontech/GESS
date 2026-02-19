@@ -37,8 +37,8 @@ const EfficiencyDashboard: React.FC<EfficiencyDashboardProps> = ({
           Energy Metrics Dashboard
         </h2>
         <p className="text-xs text-matlab-dark mt-1 ml-8">
-          Load: <span className="font-mono font-bold">{loadMass.toLocaleString()}</span> kg • 
-          Height: <span className="font-mono font-bold">{height}</span>m • 
+          Load: <span className="font-mono font-bold">{loadMass.toLocaleString()}</span> kg •
+          Height: <span className="font-mono font-bold">{height}</span>m •
           Material: <span className="font-bold">{material.name}</span>
         </p>
       </div>
@@ -62,6 +62,7 @@ const EfficiencyDashboard: React.FC<EfficiencyDashboardProps> = ({
           <div className="text-xl font-mono font-bold text-matlab-text">
             {formatEnergy(projectEnergy.input)}
           </div>
+          <div className="text-xs text-matlab-dark mt-0.5">η<sub>lift</sub> = {projectEnergy.liftEfficiency.toFixed(1)}%</div>
         </div>
 
         <div className="bg-white panel-sunken p-3">
@@ -72,16 +73,18 @@ const EfficiencyDashboard: React.FC<EfficiencyDashboardProps> = ({
           <div className="text-xl font-mono font-bold text-matlab-text">
             {formatEnergy(energyAfterDischarge)}
           </div>
+          <div className="text-xs text-matlab-dark mt-0.5">η<sub>gen</sub> = {projectEnergy.generationEfficiency.toFixed(1)}%</div>
         </div>
 
         <div className="bg-white panel-sunken p-3">
           <div className="flex items-center gap-2 mb-1">
             <TrendingUp className="text-green-700" size={16} />
-            <span className="text-xs font-semibold text-matlab-text">Efficiency</span>
+            <span className="text-xs font-semibold text-matlab-text">Round-Trip η</span>
           </div>
           <div className="text-xl font-mono font-bold text-matlab-text">
             {projectEnergy.efficiency.toFixed(1)}%
           </div>
+          <div className="text-xs text-matlab-dark mt-0.5">η<sub>lift</sub> × η<sub>gen</sub></div>
         </div>
       </div>
 
@@ -91,7 +94,7 @@ const EfficiencyDashboard: React.FC<EfficiencyDashboardProps> = ({
           <Clock size={14} />
           Self-Discharge Analysis
         </h3>
-        
+
         {material.name === 'Water' ? (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">

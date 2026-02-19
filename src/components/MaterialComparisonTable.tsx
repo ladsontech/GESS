@@ -14,17 +14,17 @@ const MaterialComparisonTable: React.FC<MaterialComparisonTableProps> = ({ loadM
         <h3 className="text-base font-bold text-matlab-text mb-1">Material Comparison Analysis</h3>
         <p className="text-xs text-matlab-dark">Comprehensive comparison of storage media properties and performance</p>
       </div>
-      
+
       <div className="overflow-x-auto bg-white panel-sunken p-2">
         <table className="w-full text-xs border-collapse">
           <thead>
             <tr className="bg-matlab-toolbar border-b-2 border-matlab-dark">
               <th className="text-left py-2 px-2 font-bold text-matlab-text">Material</th>
-              <th className="text-right py-2 px-2 font-bold text-matlab-text">Density<br/>(kg/m³)</th>
-              <th className="text-right py-2 px-2 font-bold text-matlab-text">Energy Density<br/>(kWh/m³)</th>
-              <th className="text-right py-2 px-2 font-bold text-matlab-text">Project Efficiency<br/>(%)</th>
+              <th className="text-right py-2 px-2 font-bold text-matlab-text">Density<br />(kg/m³)</th>
+              <th className="text-right py-2 px-2 font-bold text-matlab-text">Energy Density<br />(kWh/m³)</th>
+              <th className="text-right py-2 px-2 font-bold text-matlab-text">Project Efficiency<br />(%)</th>
               <th className="text-center py-2 px-2 font-bold text-matlab-text">Self-Discharge</th>
-              <th className="text-right py-2 px-2 font-bold text-matlab-text">Power Output<br/>(kW)</th>
+              <th className="text-right py-2 px-2 font-bold text-matlab-text">Power Output<br />(kW)</th>
               <th className="text-center py-2 px-2 font-bold text-matlab-text">Duration</th>
             </tr>
           </thead>
@@ -68,14 +68,14 @@ const MaterialComparisonTable: React.FC<MaterialComparisonTableProps> = ({ loadM
           </tbody>
         </table>
       </div>
-      
+
       <div className="mt-4 p-3 bg-white panel-sunken">
         <h4 className="text-xs font-bold text-matlab-text mb-2 pb-1 border-b border-matlab-border">Key Findings</h4>
         <div className="text-xs text-matlab-dark space-y-1">
-          <div>• <strong>Concrete</strong>: Highest energy density (6.53 kWh/m³) due to superior density</div>
-          <div>• <strong>Sand</strong>: Best cost-effectiveness with zero self-discharge</div>
-          <div>• <strong>Water</strong>: Highest power output but suffers from evaporation losses</div>
-          <div>• All materials achieve 81% round-trip efficiency (Table 3.2)</div>
+          <div>• <strong>Concrete</strong>: Highest energy density due to superior density (2400 kg/m³) — η = {(0.92 * 0.90 * 100).toFixed(1)}%</div>
+          <div>• <strong>Sand</strong>: Best cost-effectiveness with zero self-discharge — η = {(0.88 * 0.85 * 100).toFixed(1)}%</div>
+          <div>• <strong>Water</strong>: Highest power output but suffers from evaporation losses — η = {(0.85 * 0.82 * 100).toFixed(1)}%</div>
+          <div>• Each material has <strong>different</strong> round-trip efficiencies based on mechanical system characteristics</div>
         </div>
       </div>
     </div>
