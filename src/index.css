@@ -1,185 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Classic MATLAB/Engineering Software Theme */
+/* ─── Modern Clean Theme ──────────────────────────────────────────────── */
+
 @layer base {
   body {
-    @apply bg-matlab-bg text-matlab-text font-system;
+    @apply bg-white text-surface-800 font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-tight;
   }
 }
 
-/* Classic raised panel effect */
-.panel-raised {
-  border-top: 2px solid #FFFFFF;
-  border-left: 2px solid #FFFFFF;
-  border-bottom: 2px solid #808080;
-  border-right: 2px solid #808080;
-  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5);
+/* ─── Card Styles ─────────────────────────────────────────────────────── */
+.card {
+  @apply bg-white rounded-xl border border-surface-200 shadow-sm;
 }
 
-/* Classic sunken panel effect */
-.panel-sunken {
-  border-top: 2px solid #808080;
-  border-left: 2px solid #808080;
-  border-bottom: 2px solid #FFFFFF;
-  border-right: 2px solid #FFFFFF;
-  box-shadow: inset -1px -1px 0 rgba(255,255,255,0.5);
+.card-header {
+  @apply px-6 py-4 border-b border-surface-100;
 }
 
-/* MATLAB-style slider */
-.slider {
-  appearance: none;
-  height: 6px;
-  background: #FFFFFF;
-  border: 1px solid #808080;
-  box-shadow: inset 1px 1px 2px rgba(0,0,0,0.2);
+.card-body {
+  @apply px-6 py-5;
 }
 
-.slider::-webkit-slider-thumb {
-  appearance: none;
-  width: 16px;
-  height: 20px;
-  background: linear-gradient(to bottom, #F0F0F0, #C0C0C0);
-  border: 1px solid #808080;
-  border-radius: 2px;
-  cursor: pointer;
-  box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+/* ─── Data Table ──────────────────────────────────────────────────────── */
+.data-table {
+  @apply w-full text-sm border-collapse;
 }
 
-.slider::-webkit-slider-thumb:hover {
-  background: linear-gradient(to bottom, #FFFFFF, #D0D0D0);
+.data-table thead th {
+  @apply text-left py-3 px-4 bg-surface-50 text-surface-600 font-semibold text-xs uppercase tracking-wider border-b border-surface-200;
 }
 
-.slider::-webkit-slider-thumb:active {
-  background: linear-gradient(to bottom, #D0D0D0, #A0A0A0);
+.data-table tbody td {
+  @apply py-3 px-4 border-b border-surface-100 text-surface-700;
 }
 
-.slider::-moz-range-thumb {
-  width: 16px;
-  height: 20px;
-  background: linear-gradient(to bottom, #F0F0F0, #C0C0C0);
-  border: 1px solid #808080;
-  border-radius: 2px;
-  cursor: pointer;
-  box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+.data-table tbody tr:hover {
+  @apply bg-primary-50/50;
 }
 
-.slider::-moz-range-thumb:hover {
-  background: linear-gradient(to bottom, #FFFFFF, #D0D0D0);
+.data-table .mono {
+  @apply font-mono text-surface-800 font-medium;
 }
 
-.slider::-moz-range-thumb:active {
-  background: linear-gradient(to bottom, #D0D0D0, #A0A0A0);
+/* ─── Section Styling ─────────────────────────────────────────────────── */
+.section-title {
+  @apply text-xl font-bold text-surface-900 mb-1;
 }
 
-/* Animation keyframes */
+.section-subtitle {
+  @apply text-sm text-surface-500 mb-6;
+}
+
+/* ─── Metric Cards ────────────────────────────────────────────────────── */
+.metric-card {
+  @apply bg-surface-50 rounded-lg p-4 border border-surface-100;
+}
+
+.metric-label {
+  @apply text-xs font-medium text-surface-500 uppercase tracking-wide mb-1;
+}
+
+.metric-value {
+  @apply text-lg font-mono font-bold text-surface-900;
+}
+
+.metric-unit {
+  @apply text-sm font-normal text-surface-400 ml-1;
+}
+
+/* ─── Interpretation Notes ────────────────────────────────────────────── */
+.note {
+  @apply bg-primary-50 border-l-4 border-primary-500 rounded-r-lg px-4 py-3 text-sm text-surface-700;
+}
+
+.note strong {
+  @apply text-surface-900;
+}
+
+/* ─── Tab Styles ──────────────────────────────────────────────────────── */
+.tab-btn {
+  @apply px-5 py-2.5 text-sm font-medium rounded-lg transition-all duration-200;
+}
+
+.tab-btn.active {
+  @apply bg-primary-600 text-white shadow-md shadow-primary-200;
+}
+
+.tab-btn:not(.active) {
+  @apply text-surface-500 hover:text-surface-700 hover:bg-surface-100;
+}
+
+/* ─── Animations ──────────────────────────────────────────────────────── */
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: translateY(8px);
   }
+
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Animation utility classes */
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out;
 }
 
-/* Chart container styles - Classic MATLAB theme */
+/* ─── Recharts Overrides (Clean) ──────────────────────────────────────── */
 .recharts-wrapper {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.recharts-tooltip-wrapper {
-  border-radius: 0 !important;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
 .recharts-default-tooltip {
-  background: #FFFACD !important;
-  border: 2px solid #808080 !important;
-  border-radius: 0 !important;
-  color: #000000 !important;
-  font-family: Arial, sans-serif !important;
-  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5) !important;
+  background: white !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  padding: 10px 14px !important;
 }
 
 .recharts-tooltip-label {
-  color: #000000 !important;
-  font-weight: bold !important;
-  font-size: 11px !important;
+  color: #171717 !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  margin-bottom: 4px !important;
 }
 
 .recharts-tooltip-item {
-  color: #000000 !important;
-  font-size: 10px !important;
-}
-
-.recharts-pie-sector:hover {
-  filter: brightness(1.1);
-  transition: all 0.1s ease;
-}
-
-.recharts-text {
-  fill: #000000 !important;
-  font-family: Arial, sans-serif !important;
-  font-size: 11px !important;
+  color: #404040 !important;
+  font-size: 12px !important;
 }
 
 .recharts-legend-item-text {
-  color: #000000 !important;
-  font-family: Arial, sans-serif !important;
-  font-size: 11px !important;
+  color: #404040 !important;
+  font-size: 12px !important;
 }
 
 .recharts-cartesian-axis-tick-value {
-  fill: #000000 !important;
-  font-size: 10px !important;
+  fill: #737373 !important;
+  font-size: 11px !important;
 }
 
 .recharts-label {
-  fill: #000000 !important;
-  font-size: 11px !important;
-  font-weight: bold !important;
+  fill: #525252 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
 }
 
-/* Custom scrollbar - Classic Windows theme */
+/* ─── Scrollbar (Minimal) ─────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 16px;
-  height: 16px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #E0E0E0;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #F0F0F0, #C0C0C0);
-  border: 1px solid #808080;
+  background: #d4d4d4;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #FFFFFF, #D0D0D0);
-}
-
-::-webkit-scrollbar-corner {
-  background: #E0E0E0;
-}
-
-/* Button styles */
-button {
-  transition: none;
-}
-
-button:active {
-  transform: none;
-}
-
-/* Input focus styles */
-input:focus, select:focus, textarea:focus {
-  outline: 1px dotted #000000;
-  outline-offset: 2px;
+  background: #a3a3a3;
 }

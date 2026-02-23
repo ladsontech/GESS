@@ -4,26 +4,37 @@ export default {
   theme: {
     extend: {
       colors: {
-        'matlab': {
-          bg: '#F0F0F0',
-          panel: '#E8E8E8',
-          border: '#A0A0A0',
-          dark: '#808080',
-          text: '#000000',
-          blue: '#0076A8',
-          darkblue: '#004C6D',
-          toolbar: '#D4D4D4',
+        primary: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a5f',
+        },
+        surface: {
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
         },
       },
       fontFamily: {
-        system: ['Arial', 'Helvetica', 'sans-serif'],
-        mono: ['Courier New', 'Courier', 'monospace'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
       },
-      boxShadow: {
-        'inset-light': 'inset 1px 1px 2px rgba(255,255,255,0.8)',
-        'inset-dark': 'inset -1px -1px 2px rgba(0,0,0,0.2)',
-        'classic': '2px 2px 4px rgba(0,0,0,0.3)',
-        'classic-inset': 'inset 2px 2px 4px rgba(0,0,0,0.2)',
+      borderRadius: {
+        DEFAULT: '0.5rem',
       },
     },
   },

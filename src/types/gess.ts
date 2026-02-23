@@ -1,86 +1,36 @@
-export interface Material {
+// ─── Simulation Row (used in all 3 scenarios) ─────────────────────────
+export interface SimulationRow {
+  mass: number;          // kg
+  height: number;        // m
+  mechEnergy_kJ: number; // Mechanical energy (kJ)
+  elecEnergy_kWh: number;// Electrical energy stored (kWh)
+  chargePower_kW: number;// Charging power (kW)
+  energyOut_kWh: number; // Electrical energy recovered (kWh)
+  dischargePower_kW: number; // Discharging power (kW)
+}
+
+// ─── Facility Load Profile ─────────────────────────────────────────────
+export interface FacilityProfile {
+  name: string;
+  description: string;
+  typicalLoads: string;
+  power_kW: number;
+  time_h: number;
+  energy_kWh: number;
+  height_m: number;
+  requiredMass_kg: number;
+  mechEnergy_kJ: number;
+}
+
+// ─── Material Density (for volume comparison) ──────────────────────────
+export interface MaterialDensity {
   name: string;
   density: number; // kg/m³
-  lifespanCycles: number;
-  efficiencyLoss: number; // per cycle
-  color: string;
-  efficiency: { min: number; max: number }; // efficiency range
-  liftEfficiency: number; // decimal (0-1), material-specific lift efficiency
-  generationEfficiency: number; // decimal (0-1), material-specific generation efficiency
-  flowRate?: { min: number; max: number }; // flow characteristics
-  evaporationRate?: number; // for water only
-  compactionFactor?: number; // for sand only
-  blockSizes?: number[]; // for concrete only
-  properties: string[];
-  relativeCost: number; // 1=low, 2=medium, 3=high
-  selfDischargeRate: number; // %/day
-  powerOutput?: { min: number; max: number; duration: string }; // kW and duration
-}
-
-export interface GESSParameters {
-  material: Material;
-  loadMass: number; // kg
-  height: number; // m
-  systemEfficiency: number; // %
-  cycles: number;
-  volume?: number; // m³
-  timeElapsed?: number; // hours for self-discharge calculation
-}
-
-export interface EnergyResults {
-  potentialEnergy: number; // J
-  recoveredEnergy: number; // J
-  inputEnergy: number; // J (energy required for lifting)
-  outputEnergy: number; // J (energy available for generation)
-  powerLoss: number; // W
-  totalLifespan: number; // cycles
-  volumeRequired: number; // m³
-  costEffectiveness: number;
-  energyDensity: number; // kWh/m³
-  roundTripEfficiency: number; // %
-  selfDischargeRate: number; // %/day
-  degradationRate: number; // %/cycle
-  projectEfficiency: number; // % (using project-specific values)
-  powerOutput: { min: number; max: number; duration: string }; // kW
-}
-
-export interface ScenarioConfig {
-  name: string;
-  constraints: {
-    maxVolume?: number;
-    maxHeight?: number;
-    maxCost?: number;
-    minPower?: number;
-  };
-  priority: 'energy_density' | 'material_cost' | 'power_output';
-  description: string;
-}
-
-export interface ComparisonData {
-  material: string;
-  potentialEnergy: number;
-  recoveredEnergy: number;
-  efficiency: number;
-  lifespan: number;
-  volume: number;
-  costEffectiveness: number;
-  energyDensity: number;
-  selfDischarge: number;
   color: string;
 }
 
-export interface SchoolEnergyDemand {
-  name: string;
-  dailyEnergyKWh: number;
-  description: string;
-  typicalLoad: string; // e.g. "lighting, fans, computers"
-}
-
-export interface HeightRequirement {
-  material: string;
-  requiredHeight: number; // meters
+// ─── Height Trade-off Entry ────────────────────────────────────────────
+export interface HeightTradeoff {
+  height: number;     // m
   requiredMass: number; // kg
-  targetEnergy: number; // kWh
-  roundTripEfficiency: number; // %
-  color: string;
 }
