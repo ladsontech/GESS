@@ -1,13 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { School, ArrowUpDown, Scale, Zap } from 'lucide-react';
 import {
-    BarChart,
-    Bar,
+    LineChart,
+    Line,
     XAxis,
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend,
     ResponsiveContainer,
 } from 'recharts';
 import { SCHOOL_ENERGY_DEMANDS } from '../data/materials';
@@ -71,8 +70,8 @@ const SchoolEnergyAnalytics: React.FC<SchoolEnergyAnalyticsProps> = ({
                             key={school.name}
                             onClick={() => setSelectedSchoolIndex(idx)}
                             className={`p-2 text-left transition-all ${selectedSchoolIndex === idx
-                                    ? 'bg-blue-100 panel-sunken'
-                                    : 'bg-white panel-raised hover:bg-gray-50'
+                                ? 'bg-blue-100 panel-sunken'
+                                : 'bg-white panel-raised hover:bg-gray-50'
                                 }`}
                         >
                             <div className="text-xs font-semibold text-matlab-text">{school.name}</div>
@@ -162,7 +161,7 @@ const SchoolEnergyAnalytics: React.FC<SchoolEnergyAnalyticsProps> = ({
                         Required Height per Material (Mass = {constantMass.toLocaleString()} kg)
                     </h3>
                     <ResponsiveContainer width="100%" height={250}>
-                        <BarChart data={heightChartData}>
+                        <LineChart data={heightChartData}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#C0C0C0" />
                             <XAxis dataKey="material" tick={{ fill: '#000', fontSize: 11 }} />
                             <YAxis
@@ -175,12 +174,8 @@ const SchoolEnergyAnalytics: React.FC<SchoolEnergyAnalyticsProps> = ({
                                 tick={{ fill: '#000', fontSize: 10 }}
                             />
                             <Tooltip formatter={(value: any) => `${Number(value).toFixed(1)} m`} />
-                            <Bar dataKey="Required Height (m)" fill="#3498db">
-                                {heightChartData.map((entry, index) => (
-                                    <rect key={`cell-${index}`} fill={entry.fill} />
-                                ))}
-                            </Bar>
-                        </BarChart>
+                            <Line type="monotone" dataKey="Required Height (m)" stroke="#3498db" strokeWidth={2} dot={{ r: 5, fill: '#3498db' }} activeDot={{ r: 7 }} />
+                        </LineChart>
                     </ResponsiveContainer>
                 </div>
 
@@ -190,7 +185,7 @@ const SchoolEnergyAnalytics: React.FC<SchoolEnergyAnalyticsProps> = ({
                         Required Mass per Material (Height = {constantHeight} m)
                     </h3>
                     <ResponsiveContainer width="100%" height={250}>
-                        <BarChart data={massChartData}>
+                        <LineChart data={massChartData}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#C0C0C0" />
                             <XAxis dataKey="material" tick={{ fill: '#000', fontSize: 11 }} />
                             <YAxis
@@ -203,12 +198,8 @@ const SchoolEnergyAnalytics: React.FC<SchoolEnergyAnalyticsProps> = ({
                                 tick={{ fill: '#000', fontSize: 10 }}
                             />
                             <Tooltip formatter={(value: any) => `${Number(value).toLocaleString()} kg`} />
-                            <Bar dataKey="Required Mass (kg)" fill="#e74c3c">
-                                {massChartData.map((entry, index) => (
-                                    <rect key={`cell-${index}`} fill={entry.fill} />
-                                ))}
-                            </Bar>
-                        </BarChart>
+                            <Line type="monotone" dataKey="Required Mass (kg)" stroke="#e74c3c" strokeWidth={2} dot={{ r: 5, fill: '#e74c3c' }} activeDot={{ r: 7 }} />
+                        </LineChart>
                     </ResponsiveContainer>
                 </div>
             </div>

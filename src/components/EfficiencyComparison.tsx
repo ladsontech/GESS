@@ -1,15 +1,14 @@
 import React from 'react';
 import { TrendingUp, ArrowRight } from 'lucide-react';
 import {
-    BarChart,
-    Bar,
+    LineChart,
+    Line,
     XAxis,
     YAxis,
     CartesianGrid,
     Tooltip,
     Legend,
     ResponsiveContainer,
-    Cell,
 } from 'recharts';
 import { generateEfficiencyBreakdownData } from '../utils/calculations';
 
@@ -152,13 +151,13 @@ const EfficiencyComparison: React.FC = () => {
                 })}
             </div>
 
-            {/* Bar Chart Comparison */}
+            {/* Line Chart Comparison */}
             <div className="bg-white panel-sunken p-3">
                 <h3 className="text-xs font-bold text-matlab-text mb-2 pb-1 border-b border-matlab-border">
                     Round-Trip Efficiency Comparison
                 </h3>
                 <ResponsiveContainer width="100%" height={280}>
-                    <BarChart data={data} barGap={8}>
+                    <LineChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" stroke="#C0C0C0" />
                         <XAxis dataKey="material" tick={{ fill: '#000', fontSize: 11 }} />
                         <YAxis
@@ -175,14 +174,10 @@ const EfficiencyComparison: React.FC = () => {
                             formatter={(value: any, name: string) => [`${Number(value).toFixed(1)}%`, name]}
                         />
                         <Legend />
-                        <Bar dataKey="liftEfficiency" name="Lift Efficiency" fill="#3498db" />
-                        <Bar dataKey="generationEfficiency" name="Generation Efficiency" fill="#2ecc71" />
-                        <Bar dataKey="roundTripEfficiency" name="Round-Trip Efficiency" fill="#e74c3c">
-                            {data.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.color} />
-                            ))}
-                        </Bar>
-                    </BarChart>
+                        <Line type="monotone" dataKey="liftEfficiency" name="Lift Efficiency" stroke="#3498db" strokeWidth={2} dot={{ r: 5, fill: '#3498db' }} activeDot={{ r: 7 }} />
+                        <Line type="monotone" dataKey="generationEfficiency" name="Generation Efficiency" stroke="#2ecc71" strokeWidth={2} dot={{ r: 5, fill: '#2ecc71' }} activeDot={{ r: 7 }} />
+                        <Line type="monotone" dataKey="roundTripEfficiency" name="Round-Trip Efficiency" stroke="#e74c3c" strokeWidth={2} dot={{ r: 5, fill: '#e74c3c' }} activeDot={{ r: 7 }} />
+                    </LineChart>
                 </ResponsiveContainer>
             </div>
 
