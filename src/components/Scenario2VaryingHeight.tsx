@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts';
@@ -6,7 +6,8 @@ import { generateScenario2 } from '../utils/calculations';
 import { SCENARIO2_MASS, SCENARIO2_CHARGE_TIME, SCENARIO2_DISCHARGE_TIME } from '../data/materials';
 
 const Scenario2VaryingHeight: React.FC = () => {
-    const data = generateScenario2();
+    const [mass, setMass] = useState<number>(SCENARIO2_MASS);
+    const data = generateScenario2(mass);
 
     return (
         <div className="space-y-6 animate-fadeIn">
@@ -14,8 +15,39 @@ const Scenario2VaryingHeight: React.FC = () => {
             <div>
                 <h2 className="section-title">Scenario 2: Varying Height</h2>
                 <p className="section-subtitle">
-                    Constant mass = {SCENARIO2_MASS.toLocaleString()} kg &nbsp;•&nbsp; Charge time = {SCENARIO2_CHARGE_TIME} h &nbsp;•&nbsp; Discharge time = {SCENARIO2_DISCHARGE_TIME} h
+                    Adjustable mass (default {SCENARIO2_MASS.toLocaleString()} kg) &nbsp;•&nbsp; Charge time = {SCENARIO2_CHARGE_TIME} h &nbsp;•&nbsp; Discharge time = {SCENARIO2_DISCHARGE_TIME} h
                 </p>
+            </div>
+
+            {/* Mass Control */}
+            <div className="card">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <label htmlFor="mass-slider" className="block text-sm font-semibold text-surface-800 mb-1">
+                            System Mass: <span className="text-primary-600">{mass.toLocaleString()} kg</span>
+                        </label>
+                        <p className="text-xs text-surface-500">
+                            Adjust mass to see how energy output scales across different heights.
+                        </p>
+                    </div>
+                    <div className="flex-1 max-w-xs">
+                        <input
+                            id="mass-slider"
+                            type="range"
+                            min={1000}
+                            max={20000}
+                            step={1000}
+                            value={mass}
+                            onChange={(e) => setMass(Number(e.target.value))}
+                            className="w-full h-2 bg-surface-200 rounded-lg appearance-none cursor-pointer accent-primary-600"
+                        />
+                        <div className="flex justify-between text-[10px] text-surface-400 mt-1 px-1">
+                            <span>1,000kg</span>
+                            <span>10,000kg</span>
+                            <span>20,000kg</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div className="note">

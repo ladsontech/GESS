@@ -1,4 +1,4 @@
-import { MaterialDensity, FacilityProfile } from '../types/gess';
+import { MaterialDensity } from '../types/gess';
 
 // ─── Fixed Constants (Must Be Used) ────────────────────────────────────
 export const G = 9.81;            // m/s² — gravitational acceleration
@@ -17,7 +17,7 @@ export const SCENARIO1_MASSES = [1000, 2500, 5000, 7500, 10000]; // kg
 export const SCENARIO2_MASS = 5000;            // kg
 export const SCENARIO2_CHARGE_TIME = 1;        // hour
 export const SCENARIO2_DISCHARGE_TIME = 1;     // hour
-export const SCENARIO2_HEIGHTS = [20, 50, 100, 150, 200]; // m
+export const SCENARIO2_HEIGHTS = [20, 40, 60, 80, 100, 120, 140, 160, 180, 200]; // m
 
 // ─── Scenario 3: Varying Energy Demand Inputs ─────────────────────────
 export const SCENARIO3_HEIGHT = 100;           // m
