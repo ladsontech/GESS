@@ -69,10 +69,10 @@ export const generateScenario2 = (): SimulationRow[] =>
   SCENARIO2_HEIGHTS.map(h => buildRow(SCENARIO2_MASS, h, SCENARIO2_CHARGE_TIME, SCENARIO2_DISCHARGE_TIME));
 
 /** Scenario 3: Varying Energy Demand — returns required mass for each demand */
-export const generateScenario3 = (): { demand_kWh: number; requiredMass_kg: number; mechEnergy_kJ: number; chargePower_kW: number }[] =>
+export const generateScenario3 = (height: number = SCENARIO3_HEIGHT): { demand_kWh: number; requiredMass_kg: number; mechEnergy_kJ: number; chargePower_kW: number }[] =>
   SCENARIO3_DEMANDS.map(demand => {
-    const requiredMass_kg = calcRequiredMass(demand, SCENARIO3_HEIGHT);
-    const mechEnergy_kJ = calcMechEnergy_kJ(requiredMass_kg, SCENARIO3_HEIGHT);
+    const requiredMass_kg = calcRequiredMass(demand, height);
+    const mechEnergy_kJ = calcMechEnergy_kJ(requiredMass_kg, height);
     const chargePower_kW = calcChargePower_kW(demand, SCENARIO3_CHARGE_TIME);
     return { demand_kWh: demand, requiredMass_kg, mechEnergy_kJ, chargePower_kW };
   });
